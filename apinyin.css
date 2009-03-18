@@ -1,0 +1,57 @@
+@charset "utf-8";
+/* CSS Document */
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	padding: 50px;
+	width: 500px;
+}
+
+#allen-input-pinyin {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: #004376;
+}
+
+#allen-input-match {
+	font-family: '宋体', '微软雅黑', Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #004376;
+}
+
+#allen-input-cand {
+	color: #0082E5;
+	font-family: '宋体', '微软雅黑', Arial, Helvetica, sans-serif;
+	font-size: 16px;
+}
+
+#allen-input-cand .first {
+	color: #FF3D30;
+}
+
+#allen-input-wrapper {
+	border: #C0C0C0 1px solid;
+	background: #fff;
+	margin-top: 10px;
+	width: auto;
+	float: left;
+	padding: 3px 5px;
+}
+#allen-input-top {
+	padding-bottom: 3px;
+	line-height: 18px;
+}
+
+#allen-input-cand {
+	border-top: #C0C0C0 1px solid;
+	padding-top: 3px;
+}
+
+#test-area {
+	width: 90%;
+}
