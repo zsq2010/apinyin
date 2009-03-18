@@ -7,30 +7,25 @@
 	margin: 0;
 	padding: 0;
 }
-
 #allen-input-pinyin {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	font-weight: bold;
 	color: #004376;
 }
-
 #allen-input-match {
 	font-family: '宋体', '微软雅黑', Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	color: #004376;
 }
-
 #allen-input-cand {
 	color: #0082E5;
 	font-family: '宋体', '微软雅黑', Arial, Helvetica, sans-serif;
 	font-size: 16px;
 }
-
 #allen-input-cand .first {
 	color: #FF3D30;
 }
-
 #allen-input-wrapper {
 	border: #C0C0C0 1px solid;
 	background: #fff;
@@ -43,14 +38,17 @@
 	padding-bottom: 3px;
 	line-height: 18px;
 }
-
 #allen-input-cand {
 	border-top: #C0C0C0 1px solid;
 	padding-top: 3px;
 }
-
 #test-area {
 	width: 100%;
+}
+#loading {
+	font-size: 12px;
+	color: #bbb;
+	padding: 5px 0px;
 }
 </style>
 <textarea id="test-area" rows="5" style="width: 100%;" disabled="disabled"></textarea>
