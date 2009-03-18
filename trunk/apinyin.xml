@@ -3,7 +3,7 @@
 <ModulePrefs title="hello world example" />
 <Content type="html"><![CDATA[
 <link type="text/css" href="http://apinyin.googlecode.com/svn/trunk/apinyin.css" rel="stylesheet" rev="stylesheet" media="all" />
-<textarea id="test-area" rows="5"></textarea>
+<textarea id="test-area" rows="5" style="width: 100%;"></textarea>
 <script type="text/javascript" src="http://apinyin.googlecode.com/svn/trunk/js/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="http://apinyin.googlecode.com/svn/trunk/js/pinyin-chs-table.js"></script>
 <script type="text/javascript" src="http://apinyin.googlecode.com/svn/trunk/js/allen-input-0.1.js"></script>
