@@ -52,7 +52,11 @@ allen.input = {
 	},
 	keypress: function(keyCode) {
 		if(keyCode == 8) {
-			return false;
+			if(this.pinyin == '') {
+				return true;
+			} else {
+				return false;
+			}
 		}
 		if(this.mode == 'url') {
 			switch(keyCode) {
