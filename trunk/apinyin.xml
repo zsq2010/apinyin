@@ -38,6 +38,7 @@
   width: auto;
   float: left;
   padding: 3px 5px;
+	display: none;
 }
 #allen-input-top {
   padding-bottom: 3px;
