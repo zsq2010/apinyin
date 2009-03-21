@@ -2,7 +2,7 @@
 <Module>
 <ModulePrefs title="aPinyin 在线拼音输入法"
   title_url="http://www.imallen.com/"
-  height="150"
+  height="200"
   author="Allen Hsu"
   author_email="allen.sh.cn@gmail.com"/>
 <Content type="html"><![CDATA[
