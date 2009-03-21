@@ -2,7 +2,7 @@ var allen = {}
 allen.input = {
   current: null,
   pinyin: '',
-  all_word: new Array(),
+  all_word: null,
   candidates: new Array(),
   cand_str: '',
   max_length: 20,
@@ -237,9 +237,10 @@ allen.input = {
     var low = 0;
     var high = this.all_word.length - 1;
     //var str_len = this.search_length;
-    var pattern = new RegExp("[^a-z';]", "g");
+    var pattern = new RegExp("[^a-z';]");
     while (low <= high) {
       var mid = Math.floor((low + high) / 2);
+			
       var code = this.all_word[mid].substr(0, this.all_word[mid].search(pattern));
       if (code.substr(0, str_len) == this.pinyin.substr(0, str_len)) {
         this.start = mid;
@@ -384,11 +385,7 @@ $.fn.extend({
 
 $(document).ready(function(){
   $('body').append('<div id="allen-input-wrapper"><div id="allen-input-top"><span id="allen-input-match"></span><span id="allen-input-pinyin"></span></div><div id="allen-input-cand"></div></div>');
-
-  var pattern = new RegExp("[a-z';]+[^a-z';]+", "g");
-  while (pattern.exec(raw) != null) {
-    allen.input.all_word.push(RegExp.lastMatch);
-  }
+  allen.input.all_word = raw.split(';');
 });
 
 $.extend({
