@@ -40,12 +40,15 @@
 	line-height: 18px;
 }
 #allen-input-cand {
-	border-top: #C0C0C0 1px solid;
-	padding-top: 3px;
+	padding: 3px 0px;
 }
 #allen-input-cand span {
 	padding: 3px;
 }
+#allen-input-cand .first {
+	padding: 3px 5px;
+}
+
 #test-area {
 	width: 100%;
 	ime-mode: disabled;
