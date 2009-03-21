@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Module>
-<ModulePrefs title="hello world example" />
+<ModulePrefs title="aPinyin 在线拼音输入法" />
 <Content type="html"><![CDATA[
 <style type="text/css">
 * {
@@ -55,6 +55,8 @@
 #test-area {
 	width: 100%;
 	ime-mode: disabled;
+	font-size: 12px;
+	color: #666;
 }
 #loading {
 	font-size: 12px;
