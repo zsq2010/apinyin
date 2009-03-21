@@ -47,6 +47,7 @@
 }
 #allen-input-cand .first {
 	padding: 3px 5px;
+	-moz-border-radius: 3px;
 }
 
 #test-area {
