@@ -75,7 +75,7 @@
   margin-right: 5px;
 }
 </style>
-<form name="f" action="http://www.google.cn/search">
+<form name="f" target="_blank" action="http://www.google.cn/search">
 <input type="hidden" value="apinyin" name="source" />
 <input type="hidden" value="zh-CN" name="hl" />
 <textarea id="test-area" rows="4" style="width: 100%;" disabled="disabled" name="q"></textarea>
