@@ -11,20 +11,21 @@
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	font-weight: bold;
-	color: #004376;
+	color: #000;
 }
 #allen-input-match {
 	font-family: '宋体', '微软雅黑', Arial, Helvetica, sans-serif;
 	font-size: 16px;
-	color: #004376;
+	color: #000;
 }
 #allen-input-cand {
-	color: #0082E5;
+	color: #000;
 	font-family: '宋体', '微软雅黑', Arial, Helvetica, sans-serif;
 	font-size: 16px;
 }
 #allen-input-cand .first {
-	color: #FF3D30;
+	color: #fff;
+	background: #3875c9;
 }
 #allen-input-wrapper {
 	border: #C0C0C0 1px solid;
@@ -44,6 +45,7 @@
 }
 #test-area {
 	width: 100%;
+	ime-mode: disabled;
 }
 #loading {
 	font-size: 12px;
