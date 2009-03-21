@@ -68,12 +68,28 @@
   color: #bbb;
   padding: 5px 0px;
 }
+#buttons {
+	padding: 3px 0px;
+}
+#buttons input {
+  margin-right: 5px;
+}
 </style>
-<textarea id="test-area" rows="4" style="width: 100%;" disabled="disabled"></textarea>
+<form name="f" action="http://www.google.cn/search">
+<input type="hidden" value="apinyin" name="source" />
+<input type="hidden" value="zh-CN" name="hl" />
+<textarea id="test-area" rows="4" style="width: 100%;" disabled="disabled" name="q"></textarea>
+<div id="buttons"><input type="submit" value="Google 搜索" name="btnG"/><input type="submit" value=" 手气不错 " name="btnI"/></div>
+</form>
 <div id="loading">正在加载 aPinyin 输入法, 请稍等...</div>
+<div id="allen-input-wrapper">
+	<div id="allen-input-top"><span id="allen-input-match"></span><span id="allen-input-pinyin"></span></div>
+	<div id="allen-input-cand"></div>
+</div>
 <script type="text/javascript" src="http://apinyin.googlecode.com/svn/trunk/js/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="http://apinyin.googlecode.com/svn/trunk/js/pinyin-chs-table.js"></script>
 <script type="text/javascript" src="http://apinyin.googlecode.com/svn/trunk/js/allen-input-0.1.js"></script>
 <script type="text/javascript" src="http://apinyin.googlecode.com/svn/trunk/js/test.js"></script>
+
 ]]></Content>
 </Module>
