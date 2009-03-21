@@ -41,15 +41,17 @@
 }
 #allen-input-cand {
 	padding: 3px 0px;
+	width: 100%;
+	over-flow: auto;
 }
 #allen-input-cand span {
 	padding: 3px;
+	float: left;
 }
 #allen-input-cand .first {
 	padding: 3px 5px;
 	-moz-border-radius: 3px;
 }
-
 #test-area {
 	width: 100%;
 	ime-mode: disabled;
