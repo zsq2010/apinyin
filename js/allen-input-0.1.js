@@ -336,7 +336,7 @@ allen.input = {
 			} else {
 				this.cand_str += '<span>';
 			}
-			this.cand_str += i + '.' + this.candidates[index] + '</span> ';
+			this.cand_str += i + '.' + this.candidates[index] + '</span>';
 			//this.candidates[i - 1] = this.candidates[index];
 			index++;
 			i++;

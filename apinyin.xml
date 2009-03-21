@@ -43,6 +43,9 @@
 	border-top: #C0C0C0 1px solid;
 	padding-top: 3px;
 }
+#allen-input-cand span {
+	padding: 3px;
+}
 #test-area {
 	width: 100%;
 	ime-mode: disabled;
