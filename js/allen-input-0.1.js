@@ -201,7 +201,8 @@ allen.input = {
 		}
 		return tmp_len;
 	},
-	pickWord: function(index) {
+	pickWord: function(num) {
+		var index = this.page * 9 + num;
 		if(this.candidates.length > index) {
 			var pos_len = this.posLen(index);
 			if(this.pinyin.length == pos_len) {
