@@ -180,6 +180,7 @@ allen.input = {
     $("#allen-input-match").html('');
     $("#allen-input-pinyin").html('');
     $("#allen-input-cand").html('');
+		$("#allen-input-wrapper").hide();
   },
   posLen: function(index) {
     var cand_pos = this.page * 9 + index;
@@ -223,6 +224,7 @@ allen.input = {
     if(this.pinyin == '') {
       this.clearAll();
     } else {
+			$("#allen-input-wrapper").show();
       $("#allen-input-pinyin").html(this.pinyin);
       this.search_length = this.pinyin;
       this.searchTable(this.pinyin.length);
