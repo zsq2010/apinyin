@@ -135,13 +135,14 @@ allen.input = {
         var keyChar = String.fromCharCode(keyCode);
         keyChar = keyChar.toLowerCase();
         var lowerKeyCode = keyChar.charCodeAt(0);
-        if(lowerKeyCode >= 97 && lowerKeyCode <= 122) {
+        if(lowerKeyCode >= 97 && lowerKeyCode <= 122) {		//'a-z' pressed, add to pinyin and show candidates
           this.pinyin += keyChar;
           this.page = 0;
           this.showCand();
           //$("#allen-input-pinyin").html(this.pinyin);
           return false;
-        } else if(lowerKeyCode >= 49 && lowerKeyCode <= 57) {
+        } else if(lowerKeyCode >= 49 && lowerKeyCode <= 49 + this.page_size - 1) {
+					//number pressed, pick word
           if(this.pinyin == '') {
             return true;
           } else {
@@ -160,6 +161,7 @@ allen.input = {
       }
     }
   },
+	//clear all settings and words
   clearAll: function() {
     this.pinyin = '';
     delete this.candidates;
@@ -178,6 +180,7 @@ allen.input = {
     $("#allen-input-cand").html('');
 		$("#allen-input-wrapper").hide();
   },
+	//calculate pinyin length of the picked word
   posLen: function(index) {
     var cand_pos = this.page * this.page_size + index;
     var i;
@@ -187,6 +190,7 @@ allen.input = {
       myDebug(this.length_arr[i].pos + ':' + this.length_arr[i].len);
     }
     myDebug('---');*/
+		//this loop can be faster
     for(i = 1; i < this.length_arr.length; i++) {
       if (this.length_arr[i].pos == cand_pos) {
         return this.length_arr[i].len;
@@ -198,15 +202,16 @@ allen.input = {
     }
     return tmp_len;
   },
+	//pick word from cadidates list
   pickWord: function(num) {
     var index = this.page * this.page_size + num;
     if(this.candidates.length > index) {
       var pos_len = this.posLen(index);
-      if(this.pinyin.length == pos_len) {
+      if(this.pinyin.length == pos_len) {		//last pinyin, update textarea
         this.current.insertAtCaret(this.match_str + this.candidates[index]);
         this.current.focus();
         this.clearAll();
-      } else {
+      } else {		//pick word into stack
         this.match_word.push(this.candidates[index]);
         this.match_pinyin.push(this.pinyin.substr(0, pos_len));
         this.pinyin = this.pinyin.substr(pos_len, this.pinyin.length - pos_len);
@@ -216,6 +221,7 @@ allen.input = {
       }
     }
   },
+	//show candidates
   showCand: function() {
     if(this.pinyin == '') {
       this.clearAll();
@@ -227,6 +233,7 @@ allen.input = {
       this.createCand();
     }
   },
+	//search table for word matching current pinyin
   searchTable: function(str_len) {
     this.start = -1;
     this.end = -1;
@@ -234,9 +241,9 @@ allen.input = {
     var high = this.all_word.length - 1;
     //var str_len = this.search_length;
     var pattern = new RegExp("[^a-z';]");
+		//search for first match of the pinyin
     while (low <= high) {
       var mid = Math.floor((low + high) / 2);
-			
       var code = this.all_word[mid].substr(0, this.all_word[mid].search(pattern));
       if (code.substr(0, str_len) == this.pinyin.substr(0, str_len)) {
         this.start = mid;
@@ -248,8 +255,10 @@ allen.input = {
         low = mid + 1;
       }
     }
+		//search for the last match of the pinyin
     if (this.start == -1) {
       this.end = -1;
+			//removed, too slow and use too much memmory
       /*if (str_len > 1) {
         //this.search_length--;
         this.searchTable(str_len - 1);
@@ -272,6 +281,7 @@ allen.input = {
     }
     //alert(this.start + ':' + this.end);
   },
+	//append more candidates for shorter pinyin
   appendMore: function() {
     //myDebug('appendMore called');
     delete this.length_arr;
@@ -281,6 +291,7 @@ allen.input = {
       len: eval(this.match_length),
       pos: 0
     });
+		//loop until done
     while (str_len > 0) {
       var low = 0;
       var high = this.all_word.length - 1;
@@ -308,6 +319,7 @@ allen.input = {
       str_len--;
     }
   },
+	//after index found, created candidates list
   createCand: function() {
     delete this.candidates;
     if(this.start >= 0) {
@@ -318,12 +330,12 @@ allen.input = {
         code_index++;
       }
     } else {
-      
       this.candidates = new Array();
     }
     this.appendMore();
     this.displayCand();
   },
+	//display candidates as html
   displayCand: function() {
     var index = this.page_size * this.page;
     this.cand_str = '';
@@ -348,12 +360,14 @@ allen.input = {
     $("#allen-input-pinyin").html(this.pinyin);
     $("#allen-input-cand").html(this.cand_str);
   },
+	//prev page
   prevPage: function() {
     if(this.page > 0) {
       this.page--;
       this.displayCand();
     }
   },
+	//next page
   nextPage: function() {
     if((this.page + 1) * this.page_size < this.candidates.length) {
       this.page++;
@@ -362,7 +376,7 @@ allen.input = {
   }
 };
 
-
+//extend jquery for the input to be used
 $.fn.extend({
   allenInput: function() {
     $(this).setCaret();
@@ -379,11 +393,13 @@ $.fn.extend({
   }
 });
 
+//import all words
 $(document).ready(function(){
   //$('body').append('<div id="allen-input-wrapper"><div id="allen-input-top"><span id="allen-input-match"></span><span id="allen-input-pinyin"></span></div><div id="allen-input-cand"></div></div>');
   allen.input.all_word = raw.split(';');
 });
 
+//folloing methods are for inserting text into textarea, got from internet
 $.extend({
   unselectContents: function() {
     if(window.getSelection) {
@@ -459,6 +475,7 @@ $.fn.extend({
   }
 });
 
+//temporary debug funtion
 function myDebug(str) {
   $('body').append('<div class="debug_info">' + str + '</div>');
 }
