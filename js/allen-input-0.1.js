@@ -1,23 +1,27 @@
 var allen = {}
+//namespace for my ime
 allen.input = {
-  current: null,
-  pinyin: '',
-  all_word: null,
-  candidates: new Array(),
-  cand_str: '',
-  max_length: 20,
-  match_word: new Array(),
-  match_str: '',
-  match_pinyin: new Array(),
-  match_length: 0,
-  length_arr: new Array(),
-  start: -1,
-  page: 0,
-  mode: 'chinese',
-  keydown: function(keyCode) {
-    if(this.mode == 'url') {
+  current: null,							//point to current input box
+  pinyin: '',									//current pinyin
+  all_word: null,							//all words list
+  candidates: new Array(),		//all candidates matched for current pinyin
+  cand_str: '',								//candidates for current page
+  max_length: 20,							//max pinyin length, not used currently
+  match_word: new Array(),		//stack for selected words
+  match_str: '',							//string of selected words
+  match_pinyin: new Array(),	//stack for matched pinyin
+  match_length: 0,						//length of pinyin that has been matched
+  length_arr: new Array(),		//to caculate length of pinyin
+  start: -1,									//start index of candidates
+  page: 0,										//current page
+	page_size: 5,								//pagee size
+  mode: 'chinese',						//ime mode, 'chinese', 'english' or 'url'
+	
+  //keydown function, to detect some special key
+	keydown: function(keyCode) {	
+    if(this.mode == 'url') {			//in url mode
       switch(keyCode) {
-      case 8:		// 'backspace' pressed, delete something
+      case 8:		//'backspace' pressed, delete something
         if(this.pinyin == '') {
           return true;
         } else {
@@ -29,14 +33,16 @@ allen.input = {
       }
     } else {
       switch(keyCode) {
-      case 8:		// 'backspace' pressed, delete something
+      case 8:		//'backspace' pressed, delete something
         if(this.match_pinyin.length > 0) {
+					//matched stack not empty, pop selected word
           this.pinyin = this.match_pinyin.pop() + this.pinyin;
           this.match_word.pop();
           this.page = 0;
           this.showCand();
           return false;
         } else {
+					//matched stack empty, delete pinyin
           if(this.pinyin == '') {
             return true;
           } else {
@@ -50,25 +56,26 @@ allen.input = {
       }
     }
   },
+	//keypress, detect most keys
   keypress: function(keyCode) {
-    if(keyCode == 8) {
+    if(keyCode == 8) {		//eat 'backspace'
       if(this.pinyin == '') {
         return true;
       } else {
         return false;
       }
     }
-    if(this.mode == 'url') {
+    if(this.mode == 'url') {		//in url mode
       switch(keyCode) {
-      case 13:
-      case 32:
+      case 13:		//'enter' pressed
+      case 32:		//'space' pressed, enter the url and switch into chinese mode
         this.current.insertAtCaret(this.pinyin);
         this.current.focus();
         this.clearAll();
         this.mode = 'chinese';
         return false;
         break;
-      default:
+      default:		//input url
         var keyChar = String.fromCharCode(keyCode);
         keyChar = keyChar.toLowerCase();
         var lowerKeyCode = keyChar.charCodeAt(0);
@@ -77,9 +84,9 @@ allen.input = {
         return false;
         break;
       }
-    } else {
+    } else {		//chinese mode
       switch(keyCode) {
-      case 13:
+      case 13:		//'enter' pressed, enter the pinyin directly
         if(this.pinyin == '') {
           return true;
         } else {
@@ -89,25 +96,14 @@ allen.input = {
           return false;
         }
         break;
-      case 8:		// 'backspace' pressed, delete something
-        if(this.match_pinyin.length > 0) {
-          this.pinyin = this.match_pinyin.pop() + this.pinyin;
-          this.match_word.pop();
-          this.page = 0;
-          this.showCand();
-          return false;
+      case 8:		//'backspace' pressed, delete something
+        if(this.pinyin == '') {
+          return true;
         } else {
-          if(this.pinyin == '') {
-            return true;
-          } else {
-            this.pinyin = this.pinyin.substr(0, this.pinyin.length - 1);
-            this.page = 0;
-            this.showCand();
-            return false;
-          }
+          return false;
         }
         break;
-      case 32:
+      case 32:		//'space' pressed, pick the first word
         if(this.pinyin == '') {
           return true;
         } else {
@@ -183,7 +179,7 @@ allen.input = {
 		$("#allen-input-wrapper").hide();
   },
   posLen: function(index) {
-    var cand_pos = this.page * 9 + index;
+    var cand_pos = this.page * this.page_size + index;
     var i;
     var tmp_len = this.length_arr[0].len;
     /*myDebug('---');
@@ -203,7 +199,7 @@ allen.input = {
     return tmp_len;
   },
   pickWord: function(num) {
-    var index = this.page * 9 + num;
+    var index = this.page * this.page_size + num;
     if(this.candidates.length > index) {
       var pos_len = this.posLen(index);
       if(this.pinyin.length == pos_len) {
@@ -329,16 +325,16 @@ allen.input = {
     this.displayCand();
   },
   displayCand: function() {
-    var index = 9 * this.page;
+    var index = this.page_size * this.page;
     this.cand_str = '';
     this.match_str = '';
     //this.candidates = new Array();
     var i = 1;
-    while (i < 10 && index < this.candidates.length) {
+    while (i <= this.page_size && index < this.candidates.length) {
       if (i == 1) {
-        this.cand_str += '<span class="first">';
+        this.cand_str += '<span class="first" onclick="javascript:allen.input.pickWord(0);">';
       } else {
-        this.cand_str += '<span>';
+        this.cand_str += '<span onclick="javascript:allen.input.pickWord(' + (i - 1) + ');">';
       }
       this.cand_str += i + '.' + this.candidates[index] + '</span>';
       //this.candidates[i - 1] = this.candidates[index];
@@ -359,7 +355,7 @@ allen.input = {
     }
   },
   nextPage: function() {
-    if((this.page + 1) * 9 < this.candidates.length) {
+    if((this.page + 1) * this.page_size < this.candidates.length) {
       this.page++;
       this.displayCand();
     }
@@ -384,7 +380,7 @@ $.fn.extend({
 });
 
 $(document).ready(function(){
-  $('body').append('<div id="allen-input-wrapper"><div id="allen-input-top"><span id="allen-input-match"></span><span id="allen-input-pinyin"></span></div><div id="allen-input-cand"></div></div>');
+  //$('body').append('<div id="allen-input-wrapper"><div id="allen-input-top"><span id="allen-input-match"></span><span id="allen-input-pinyin"></span></div><div id="allen-input-cand"></div></div>');
   allen.input.all_word = raw.split(';');
 });
 
